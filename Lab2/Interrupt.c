@@ -1,18 +1,3 @@
-Skip to content
-Search or jump to…
-
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@Michawl1 
-Code Issues 0 Pull requests 0 Projects 0 Wiki Security Pulse Community
-EECS303/Lab2/dht11_interr.c
-@nlundie nlundie done
-5d76b2c on Oct 9, 2017
-451 lines (368 sloc)  10.7 KB
-  
 // To compile: gcc dht11_interr.c -o dht11_interr -lwiringPi -Wall
 
 #include <stdio.h>
@@ -42,7 +27,7 @@ static volatile int bitsRcvd[40];
 static volatile bool readReady = false;
 static volatile int measuredBitHighTime[40];
 
-const int SENSOR_PIN_NUM = 7;
+const int SENSOR_PIN_NUM = 26;
 const int RESPONSE_TIME_US = 80;
 const int PRE_BIT_DELAY_US = 50;
 const int MAX_TIME_FOR_ZERO_BIT_US = 28;
@@ -285,8 +270,8 @@ void setupGpio()
 // Releases the GPIO reservation.
 void releaseGpio()
 {
-	system("gpio-admin export 7");
-	system("gpio-admin unexport 7");
+	system("gpio-admin export 26");
+	system("gpio-admin unexport 26");
 }
 
 /*
@@ -335,18 +320,15 @@ void analyzeAndPrintResults(int * bitsRcvd, const char * errorString, const char
 		printf("Time of reading: %s", timeAsString);
 	}
 
-	int i;
-	for(i = 0; i < 40; i = i + 1)
-	{
-		printf("bit #%d is :%d\n", i, bitsRcvd[i]);
-	}
-
 	
 	uint8_t temp_int = arrAndOffsetToInt(bitsRcvd, 16);
 	uint8_t temp_dec = arrAndOffsetToInt(bitsRcvd, 24);
 	uint8_t humid_int = arrAndOffsetToInt(bitsRcvd, 0);
 	uint8_t humid_dec = arrAndOffsetToInt(bitsRcvd, 8);
 	uint8_t checksum_read = arrAndOffsetToInt(bitsRcvd, 32);
+
+	printf("Temperature: %d.%d\n", temp_int, temp_dec);
+	printf("Humidity: %d.%d\n", humid_int, humid_dec);
 
 
 	// Check checksum
@@ -365,10 +347,6 @@ void analyzeAndPrintResults(int * bitsRcvd, const char * errorString, const char
 		
 		// Write the results to a file
 		writeResultsToFile(temp_int, temp_dec, humid_int, humid_dec, checksum_read, checksum_generated, sensorInteractionMode, timeAsString, errorString);
-	}
-	else
-	{
-		printf("Checksum failed");
 	}
 }
 
@@ -463,15 +441,3 @@ int piHiPri (const int pri)
 
   return sched_setscheduler (0, SCHED_RR, &sched) ;
 }
-© 2019 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About

@@ -1,0 +1,170 @@
+
+
+
+RESULTS OF READING VIA: interrupts
+TIME OF MEASUREMENT: Mon Sep 23 18:31:08 2019
+Temp: -1.-1
+Humidity: -1.-1
+Checksum read: 0
+Checksum calc'd: 0
+Checksum valid: true
+
+
+
+RESULTS OF READING VIA: interrupts
+TIME OF MEASUREMENT: Mon Sep 23 18:31:10 2019
+Temp: -1.-1
+Humidity: -1.-1
+Checksum read: 0
+Checksum calc'd: 0
+Checksum valid: true
+
+
+
+RESULTS OF READING VIA: interrupts
+TIME OF MEASUREMENT: Mon Sep 23 18:31:11 2019
+Temp: -1.-1
+Humidity: -1.-1
+Checksum read: 0
+Checksum calc'd: 0
+Checksum valid: true
+
+
+
+RESULTS OF READING VIA: interrupts
+TIME OF MEASUREMENT: Mon Sep 23 18:31:12 2019
+Temp: -1.-1
+Humidity: -1.-1
+Checksum read: 0
+Checksum calc'd: 0
+Checksum valid: true
+
+
+
+RESULTS OF READING VIA: interrupts
+TIME OF MEASUREMENT: Mon Sep 23 18:31:13 2019
+Temp: -1.-1
+Humidity: -1.-1
+Checksum read: 0
+Checksum calc'd: 0
+Checksum valid: true
+
+
+
+RESULTS OF READING VIA: interrupts
+TIME OF MEASUREMENT: Mon Sep 23 18:31:14 2019
+Temp: -1.-1
+Humidity: -1.-1
+Checksum read: 0
+Checksum calc'd: 0
+Checksum valid: true
+
+
+
+RESULTS OF READING VIA: interrupts
+TIME OF MEASUREMENT: Mon Sep 23 18:31:15 2019
+Temp: -1.-1
+Humidity: -1.-1
+Checksum read: 0
+Checksum calc'd: 0
+Checksum valid: true
+
+
+
+RESULTS OF READING VIA: interrupts
+TIME OF MEASUREMENT: Mon Sep 23 18:31:16 2019
+Temp: -1.-1
+Humidity: -1.-1
+Checksum read: 0
+Checksum calc'd: 0
+Checksum valid: true
+
+
+
+RESULTS OF READING VIA: interrupts
+TIME OF MEASUREMENT: Mon Sep 23 18:31:17 2019
+Temp: -1.-1
+Humidity: -1.-1
+Checksum read: 0
+Checksum calc'd: 0
+Checksum valid: true
+
+
+
+RESULTS OF READING VIA: interrupts
+TIME OF MEASUREMENT: Mon Sep 23 18:31:18 2019
+Temp: -1.-1
+Humidity: -1.-1
+Checksum read: 0
+Checksum calc'd: 0
+Checksum valid: true
+
+
+
+RESULTS OF READING VIA: interrupts
+TIME OF MEASUREMENT: Mon Sep 23 18:31:19 2019
+Temp: -1.-1
+Humidity: -1.-1
+Checksum read: 0
+Checksum calc'd: 0
+Checksum valid: true
+
+
+
+RESULTS OF READING VIA: interrupts
+TIME OF MEASUREMENT: Mon Sep 23 18:31:20 2019
+Temp: -1.-1
+Humidity: -1.-1
+Checksum read: 0
+Checksum calc'd: 0
+Checksum valid: true
+
+
+
+RESULTS OF READING VIA: interrupts
+TIME OF MEASUREMENT: Mon Sep 23 19:20:10 2019
+Temp: 28.0
+Humidity: 67.0
+Checksum read: 95
+Checksum calc'd: 95
+Checksum valid: true
+
+
+
+RESULTS OF READING VIA: interrupts
+TIME OF MEASUREMENT: Mon Sep 23 19:20:39 2019
+Temp: 28.0
+Humidity: 67.0
+Checksum read: 95
+Checksum calc'd: 95
+Checksum valid: true
+
+
+
+RESULTS OF READING VIA: interrupts
+TIME OF MEASUREMENT: Mon Sep 23 19:21:18 2019
+Temp: 25.0
+Humidity: 62.0
+Checksum read: 87
+Checksum calc'd: 87
+Checksum valid: true
+
+
+
+RESULTS OF READING VIA: interrupts
+TIME OF MEASUREMENT: Mon Sep 23 19:22:03 2019
+Temp: 23.1
+Humidity: 61.0
+Checksum read: 85
+Checksum calc'd: 85
+Checksum valid: true
+
+
+
+RESULTS OF READING VIA: interrupts
+TIME OF MEASUREMENT: Mon Sep 23 19:23:20 2019
+Temp: 22.0
+Humidity: 57.128
+Checksum read: 207
+Checksum calc'd: 207
+Checksum valid: true

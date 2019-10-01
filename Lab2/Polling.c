@@ -9,10 +9,11 @@
 #include <time.h>
 
 #define MAXTIMINGS	85
-#define DHTPIN		7
+#define DHTPIN		26
 int dht11_dat[5] = { 0, 0, 0, 0, 0 };
+uint8_t arbitraryValue = 0;
 
-//FILE *outputFile;
+FILE *outputFile;
 
 void read_dht11_dat()
 {
@@ -76,20 +77,24 @@ void read_dht11_dat()
 	//print time
 
 	//write humidity and temperature into file
-		
+	fprintf(outputFile, "Humidity %d.%d, Temperature %d.%d\n", dht11_dat[0], dht11_dat[1], dht11_dat[2], dht11_dat[3]);
 }
  
 int main()
 { 
-	if ( wiringPiSetup() == -1 )
-		exit( 1 );
+	wiringPiSetupGpio();
 
-	//outputFile = fopen("./data.txt", "w");
+	outputFile = fopen("./data.txt", "w");
 
 	while ( 1 )
 	{
 		read_dht11_dat();
 		// wait 1sec to refresh
+		arbitraryValue++;
+		if(arbitraryValue == 10)
+		{
+			fclose(outputFile);
+		}
 
 		delay( 1000 ); 
 	}
