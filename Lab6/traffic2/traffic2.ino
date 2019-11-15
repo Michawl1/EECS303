@@ -10,7 +10,9 @@
 
 #define ON      255
 #define OFF     0
-#define DIM     127
+#define DIM     32
+
+#define STARTUP 100
 
 bool flagA;
 bool flagB;
@@ -25,13 +27,15 @@ void setup()
   pinMode(PedA, OUTPUT);
   pinMode(PedB, OUTPUT);
 
-  pinMode(ButtonA, INPUT_PULLUP);
-  pinMode(ButtonB, INPUT_PULLUP);
+  pinMode(ButtonA, CHANGE);
+  pinMode(ButtonB, CHANGE);
   attachInterrupt(digitalPinToInterrupt(ButtonA), buttonA_IRQ, LOW);
   attachInterrupt(digitalPinToInterrupt(ButtonB), buttonB_IRQ, LOW);
 
   flagA = false;
   flagB = false;
+
+  startBlink();
 }
 
 void loop() 
@@ -41,32 +45,81 @@ void loop()
   digitalWrite(RedA, LOW);
   digitalWrite(RedB, LOW);
 
-  int counter = 0;
-  
   while(1)
   {
     if(!flagB && !flagA)
     {
       trafficA(false);
       trafficB(true);
+    }
+
+    if(!flagB && !flagA)
+    {
       trafficB(false);
       trafficA(true);
     }
-    else if(flagA)
+    
+    if(flagA)
     {
-      if(counter == 2)
+      digitalWrite(PedA, HIGH);
+      for(int i = 0; i < 3; i++)
       {
-        counter = 0;
+        trafficA(false);
+        trafficB(true);
+        trafficB(false);
+        delay(10000);
       }
+      flagA = false;
+      digitalWrite(PedA, LOW);
+      trafficA(true);
+      trafficB(false);
     }
-    else if(flagB)
+    
+    if(flagB)
     {
-      if(counter == 2)
+      digitalWrite(PedB, HIGH);
+      for(int i = 0; i < 3; i++)
       {
-        counter = 0;
+        trafficB(false);
+        trafficA(true);
+        trafficA(false);
+        delay(10000);
       }
+      flagB = false;
+      digitalWrite(PedB, LOW);
     }
   }
+}
+
+void startBlink()
+{
+  digitalWrite(RedA, HIGH);
+  delay(STARTUP);
+  digitalWrite(RedA, LOW);
+
+  analogWrite(GreenA, ON);
+  delay(STARTUP);
+  analogWrite(GreenA, OFF);
+
+  digitalWrite(PedA, HIGH);
+  delay(STARTUP);
+  digitalWrite(PedA, LOW);
+
+  digitalWrite(RedB, HIGH);
+  delay(STARTUP);
+  digitalWrite(RedB, LOW);
+
+  analogWrite(GreenB, ON);
+  delay(STARTUP);
+  analogWrite(GreenB, OFF);
+
+  digitalWrite(PedB, HIGH);
+  delay(STARTUP);
+  digitalWrite(PedB, LOW);
+  
+  delay(STARTUP);
+  delay(STARTUP);
+  delay(STARTUP);
 }
 
 void trafficA(bool flag)
@@ -111,17 +164,7 @@ void trafficB(bool flag)
 
 void buttonA_IRQ()
 {
-  digitalWrite(PedA, HIGH);
-  trafficA(false);
-
-  for(int i = 0; i < 3; i++)
-  {
-    trafficB(true);
-    trafficB(false);
-    delay(10000);
-  }
-  
-  digitalWrite(PedA, LOW);
+  flagA = true;
 }
 
 void buttonB_IRQ()

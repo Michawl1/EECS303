@@ -1,11 +1,11 @@
-#define GreenA  3
-#define GreenB  9
-#define RedA    10
-#define RedB    11
+#define GreenA  10
+#define GreenB  11
+#define RedA    6
+#define RedB    7
 
 #define ON      255
 #define OFF     0
-#define DIM     127
+#define DIM     32
 
 void setup() 
 {
