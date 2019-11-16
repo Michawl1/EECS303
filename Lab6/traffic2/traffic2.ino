@@ -39,12 +39,12 @@ void setup()
 }
 
 void loop() 
-{
+{    
   analogWrite(GreenA, OFF);
   analogWrite(GreenB, OFF);
   digitalWrite(RedA, LOW);
   digitalWrite(RedB, LOW);
-
+  
   while(1)
   {
     if(!flagB && !flagA)
@@ -71,11 +71,14 @@ void loop()
       }
       flagA = false;
       digitalWrite(PedA, LOW);
-      trafficA(true);
-      trafficB(false);
+
+      if(!flagB)
+      {
+        trafficA(true);
+        trafficB(false);
+      }
     }
-    
-    if(flagB)
+    else if(flagB)
     {
       digitalWrite(PedB, HIGH);
       for(int i = 0; i < 3; i++)
@@ -87,6 +90,12 @@ void loop()
       }
       flagB = false;
       digitalWrite(PedB, LOW);
+
+      if(!flagA)
+      {
+        trafficA(false);
+        trafficB(true);
+      }
     }
   }
 }
