@@ -12,10 +12,24 @@
 #define OFF     0
 #define DIM     32
 
+#define StateA        0
+#define StateADim     1
+#define StateAOverlap 2
+#define StateB        3
+#define StateBDim     4
+#define StateBOverlap 5
+#define Ped           6
+
+#define LONG  8000 / 4
+#define SHORT 2000 / 4
+
 #define STARTUP 100
 
 bool flagA;
 bool flagB;
+
+int state;
+int prevState;
 
 void setup() 
 {
@@ -29,11 +43,13 @@ void setup()
 
   pinMode(ButtonA, CHANGE);
   pinMode(ButtonB, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(ButtonA), buttonA_IRQ, LOW);
-  attachInterrupt(digitalPinToInterrupt(ButtonB), buttonB_IRQ, LOW);
+  attachInterrupt(digitalPinToInterrupt(ButtonA), buttonA_IRQ, HIGH);
+  attachInterrupt(digitalPinToInterrupt(ButtonB), buttonB_IRQ, HIGH);
 
   flagA = false;
   flagB = false;
+
+  state = StateA;
 
   startBlink();
 }
@@ -42,61 +58,125 @@ void loop()
 {    
   analogWrite(GreenA, OFF);
   analogWrite(GreenB, OFF);
-  digitalWrite(RedA, LOW);
-  digitalWrite(RedB, LOW);
+  digitalWrite(RedA, HIGH);
+  digitalWrite(RedB, HIGH);
   
   while(1)
-  {
-    if(!flagB && !flagA)
-    {
-      trafficA(false);
-      trafficB(true);
-    }
-
-    if(!flagB && !flagA)
-    {
-      trafficB(false);
-      trafficA(true);
-    }
+  {    
     
-    if(flagA)
+    switch(state)
     {
-      digitalWrite(PedA, HIGH);
-      for(int i = 0; i < 3; i++)
-      {
-        trafficA(false);
-        trafficB(true);
-        trafficB(false);
-        delay(10000);
+      case StateA:
+        if(!flagA && !flagB)
+        {
+          state = StateADim;
+        }
+        else
+        {
+          state = Ped;
+        }
+        analogWrite(GreenA, ON);
+        digitalWrite(RedA, LOW);
+        delay(LONG);
+        break;
+        
+      case StateADim:
+        state = StateAOverlap;
+        analogWrite(GreenA, DIM);
+        delay(SHORT);
+        break;
+        
+      case StateAOverlap:
+        if(!flagA && !flagB)
+        {
+          state = StateB;
+        }
+        else
+        {
+          state = Ped;
+        }
+        analogWrite(GreenA, OFF);
+        digitalWrite(RedA, HIGH);
+        analogWrite(GreenB, OFF);
+        digitalWrite(RedB, HIGH);
+        delay(SHORT);
+        break;
+        
+      case StateB:
+        if(!flagA && !flagB)
+        {
+          state = StateBDim;
+        }
+        else
+        {
+          state = Ped;
+        }
+        analogWrite(GreenB, ON);
+        digitalWrite(RedB, LOW);
+        delay(LONG);
+        break;
+        
+      case StateBDim:
+        state = StateBOverlap;
+        prevState = state;
+        analogWrite(GreenB, DIM);
+        delay(SHORT);
+        break;
+        
+      case StateBOverlap:
+        if(!flagA && !flagB)
+        {
+          state = StateA;
+        }
+        else
+        {
+          state = Ped;
+        }
+        analogWrite(GreenA, OFF);
+        digitalWrite(RedA, HIGH);
+        analogWrite(GreenB, OFF);
+        digitalWrite(RedB, HIGH);
+        delay(SHORT);
+        break;
+        
+      case Ped:
+          if(flagA)
+          {
+            digitalWrite(PedA, HIGH);
+            for(int i = 0; i < 3; i++)
+            {
+              trafficA(false);
+              trafficB(true);
+              trafficB(false);
+              delay(LONG);
+              delay(SHORT);
+            }
+            flagA = false;
+            digitalWrite(PedA, LOW);
+            if(!flagB)
+            {
+              state = StateB;
+            }
+          }
+          else if(flagB)
+          {
+            digitalWrite(PedB, HIGH);
+            for(int i = 0; i < 3; i++)
+            {
+              trafficB(false);
+              trafficA(true);
+              trafficA(false);
+              delay(LONG);
+              delay(SHORT);
+            }
+            flagB = false;
+            digitalWrite(PedB, LOW); 
+            if(!flagA)
+            {   
+              state = StateA;
+            }
+          }
       }
-      flagA = false;
-      digitalWrite(PedA, LOW);
-
-      if(!flagB)
-      {
-        trafficA(true);
-        trafficB(false);
-      }
-    }
-    else if(flagB)
-    {
-      digitalWrite(PedB, HIGH);
-      for(int i = 0; i < 3; i++)
-      {
-        trafficB(false);
-        trafficA(true);
-        trafficA(false);
-        delay(10000);
-      }
-      flagB = false;
-      digitalWrite(PedB, LOW);
-
-      if(!flagA)
-      {
-        trafficA(false);
-        trafficB(true);
-      }
-    }
   }
 }
 
@@ -138,11 +218,11 @@ void trafficA(bool flag)
     analogWrite(GreenA, ON);
     digitalWrite(RedA, LOW);
 
-    delay(8000);
+    delay(LONG);
 
     analogWrite(GreenA, DIM);
 
-    delay(2000);
+    delay(SHORT);
   }
   else
   {
@@ -158,11 +238,11 @@ void trafficB(bool flag)
     analogWrite(GreenB, ON);
     digitalWrite(RedB, LOW);
 
-    delay(8000);
+    delay(LONG);
 
     analogWrite(GreenB, DIM);
 
-    delay(2000);
+    delay(SHORT);
   }
   else
   {
